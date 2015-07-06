@@ -37,13 +37,15 @@
             _dialog.append(doodle)
           })
 
+          //
+          //if ($.address.value()=="/"){
+          //  var n = resp.total_rows
+          //  var books = _dialog.find('a')
+          //  var randBook = resp.rows[n].id
+          //  $.address.value(randBook)
+          //}
 
-          if ($.address.value()=="/"){
-            var n = resp.total_rows
-            var books = _dialog.find('a')
-            var randBook = resp.rows[Math.floor(Math.random()*n)].id
-            $.address.value(randBook)
-          }
+          $.address.value("virtual-sn")
           
         })
         

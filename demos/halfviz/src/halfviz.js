@@ -58,6 +58,7 @@
       getDoc:function(e){
         $.getJSON('library/'+e.id+'.json', function(doc){
 
+        //$.getJSON('library/virtual-sn.json', function(doc){
           // update the system parameters
           if (doc.sys){
             sys.parameters(doc.sys)

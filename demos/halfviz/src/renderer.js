@@ -22,12 +22,58 @@
 
         // draw the nodes & save their bounds for edge drawing
         var nodeBoxes = {}
+
+
+        var group_location_x = function (val,group) {
+
+          var xf;
+          switch(group){
+            case 1:
+              xf= function(val){return val/2}
+              break;
+            case 2:
+              xf=function(val){return canvas.width/2+val/2}//window
+              break;
+            default:
+              xf=function(val){return val}
+          }
+          return xf(val,group)
+
+        }
+
+        var palette = {
+          1:"rgba(0,133,115,0.5)",
+
+          //1:"#ae7bb3",
+          2:"rgba(106, 78, 90, 0.5)",
+          0:"rgba(245, 88, 119, 0.2)",
+          999:"rgba(0,0,0,.2)"
+        }
+
+
+
         particleSystem.eachNode(function(node, pt){
           // node: {mass:#, p:{x,y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
 
           // determine the box size and round off the coords if we'll be 
           // drawing a text label (awful alignment jitter otherwise...)
+
+          pt.x=group_location_x(pt.x,node.data.g||999);
+
+          var choose_node_color = function () {
+            if (node.data.color=="none")return "white"
+
+            if (node.data.color)
+              return node.data.color
+            else
+              return palette[node.data.g]
+
+          }
+
+
+
+
           var label = node.data.label||""
           var w = ctx.measureText(""+label).width + 10
           if (!(""+label).match(/^[ \t]*$/)){
@@ -38,26 +84,25 @@
           }
 
           // draw a rectangle centered at pt
-          if (node.data.color) ctx.fillStyle = node.data.color
-          else ctx.fillStyle = "rgba(0,0,0,.2)"
-          if (node.data.color=='none') ctx.fillStyle = "white"
+          ctx.fillStyle=choose_node_color()
+
 
           if (node.data.shape=='dot'){
             gfx.oval(pt.x-w/2, pt.y-w/2, w,w, {fill:ctx.fillStyle})
             nodeBoxes[node.name] = [pt.x-w/2, pt.y-w/2, w,w]
           }else{
-            gfx.rect(pt.x-w/2, pt.y-10, w,20, 4, {fill:ctx.fillStyle})
+            gfx.rect(pt.x-w/2, pt.y-10, w,20, 10, {fill:ctx.fillStyle})
             nodeBoxes[node.name] = [pt.x-w/2, pt.y-11, w, 22]
           }
 
           // draw the text
           if (label){
-            ctx.font = "16px Helvetica"
+            ctx.font = "20px Helvetica"
             ctx.textAlign = "center"
             ctx.fillStyle = "white"
             if (node.data.color=='none') ctx.fillStyle = '#333333'
-            ctx.fillText(label||"", pt.x, pt.y+4)
-            ctx.fillText(label||"", pt.x, pt.y+4)
+            ctx.fillText(label||"", pt.x, pt.y+8)
+            ctx.fillText(label||"", pt.x, pt.y+8)
           }
         })    			
 
@@ -70,6 +115,21 @@
 
           var weight = edge.data.weight
           var color = edge.data.color
+          var sg = edge.source.data.g
+          var tg = edge.target.data.g
+
+
+          //choose edge color
+          var choose_color = (color) ?
+              color :((!(isNaN(sg)||isNaN(tg)) )?
+                  ((sg==tg)?
+                      palette[sg]:palette[0])
+                  :"#cccccc"
+          )
+
+          pt1.x=group_location_x(pt1.x,sg||0);
+          pt2.x=group_location_x(pt2.x,tg||0);
+
 
           if (!color || (""+color).match(/^[ \t]*$/)) color = null
 
@@ -79,8 +139,8 @@
 
           ctx.save() 
             ctx.beginPath()
-            ctx.lineWidth = (!isNaN(weight)) ? parseFloat(weight) : 1
-            ctx.strokeStyle = (color) ? color : "#cccccc"
+            ctx.lineWidth = (!isNaN(weight)) ? parseFloat(weight) : 2.5
+            ctx.strokeStyle = choose_color
             ctx.fillStyle = null
 
             ctx.moveTo(tail.x, tail.y)
@@ -95,7 +155,7 @@
               var wt = !isNaN(weight) ? parseFloat(weight) : 1
               var arrowLength = 6 + wt
               var arrowWidth = 2 + wt
-              ctx.fillStyle = (color) ? color : "#cccccc"
+              ctx.fillStyle = choose_color
               ctx.translate(head.x, head.y);
               ctx.rotate(Math.atan2(head.y - tail.y, head.x - tail.x));
 
@@ -129,8 +189,12 @@
         var handler = {
           clicked:function(e){
             var pos = $(canvas).offset();
-            _mouseP = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
-            selected = nearest = dragged = particleSystem.nearest(_mouseP);
+            _mouseP = arbor.Point(
+                ((e.pageX-pos.left)<canvas.width/2)?
+                ((e.pageX-pos.left)*2):((e.pageX-pos.left)-canvas.width/2)*2
+                , e.pageY-pos.top)
+            selected = nearest = dragged = particleSystem.nearest(_mouseP);//change here to _mouseP/2(or bias+_mouseP/2) depending on which half mouse is in
+
 
             if (dragged.node !== null) dragged.node.fixed = true
 
@@ -142,7 +206,10 @@
           dragged:function(e){
             var old_nearest = nearest && nearest.node._id
             var pos = $(canvas).offset();
-            var s = arbor.Point(e.pageX-pos.left, e.pageY-pos.top)
+            var s = arbor.Point(
+                ((e.pageX-pos.left)<canvas.width/2)?
+                    ((e.pageX-pos.left)*2):((e.pageX-pos.left)-canvas.width/2)*2
+                , e.pageY-pos.top)
 
             if (!nearest) return
             if (dragged !== null && dragged.node !== null){

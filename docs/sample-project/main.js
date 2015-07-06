@@ -50,6 +50,9 @@
           // pt2:  {x:#, y:#}  target position in screen coords
 
           // draw a line from pt1 to pt2
+
+          pt1.x=pt1.x/2;
+          pt2.x=pt2.x/2;
           ctx.strokeStyle = "rgba(0,0,0, .333)"
           ctx.lineWidth = 1
           ctx.beginPath()
@@ -59,11 +62,13 @@
         })
 
         particleSystem.eachNode(function(node, pt){
-          // node: {mass:#, p:{x,y}, name:"", data:{}}
+          // node: {mass:#, p:{x, y}, name:"", data:{}}
           // pt:   {x:#, y:#}  node position in screen coords
 
           // draw a rectangle centered at pt
           var w = 10
+          pt.x=pt.x/2;
+
           ctx.fillStyle = (node.data.alone) ? "orange" : "black"
           ctx.fillRect(pt.x-w/2, pt.y-w/2, w,w)
         })    			

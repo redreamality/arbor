@@ -1,4 +1,4 @@
-{"total_rows":16,"offset":0,"rows":[
+{"total_rows":17,"offset":0,"rows":[
 {"id":"the-abominable-snowman","key":["cyoa","abominable-snowman"],"value":"The Abominable Snowman"},
 {"id":"case-of-the-silk-king","key":["cyoa","case-of-the-silk-king"],"value":"Case Of The Silk King"},
 {"id":"the-cave-of-time","key":["cyoa","cave-of-time"],"value":"The Cave of Time"},
@@ -14,5 +14,6 @@
 {"id":"third-planet-from-altair","key":["cyoa","third-planet-from-altair"],"value":"Third Planet from Altair"},
 {"id":"cube","key":["doodle","cube"],"value":"Cube"},
 {"id":"python-grammar","key":["doodle","python-grammar"],"value":"Python Grammar"},
-{"id":"snowflake","key":["doodle","snowflake"],"value":"Snowflake"}
+{"id":"snowflake","key":["doodle","snowflake"],"value":"Snowflake"},
+{"id":"virtual-sn","key":["doodle","virtual-sn"],"value":"virtual-sn"}
 ]}

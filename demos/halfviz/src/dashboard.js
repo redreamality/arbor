@@ -32,7 +32,7 @@
     var _state = null
     
     var that = {
-      helpPanel:HelpPanel($('#rtfm')),
+      clpPanel:HelpPanel($('#rtfm')),
       init:function(){
         // initialize the display with params from the particle system
         that.update()
