@@ -25,7 +25,7 @@
         // inform the system of the screen dimensions so it can map coords for us.
         // if the canvas is ever resized, screenSize should be called again with
         // the new dimensions
-        particleSystem.screenSize(canvas.width, canvas.height) 
+        //particleSystem.screenSize(canvas.width, canvas.height)
         particleSystem.screenPadding(80) // leave an extra 80px of whitespace per side
       },
       

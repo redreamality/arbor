@@ -11,10 +11,20 @@
   objcopy = arbor.etc.objcopy
   var parse = Parseur().parse
 
+
+
   var HalfViz = function(elt){
     var dom = $(elt)
 
-    sys = arbor.ParticleSystem(2600, 512, 0.5)
+    sys = arbor.ParticleSystem({
+      friction:.5,
+      stiffness:500,
+      repulsion:2600,
+      precision:0.1,
+      fps:60,
+      dt:0.005,
+    })
+
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
     sys.screenPadding(20)
     
@@ -84,7 +94,7 @@
       },
       
       resize:function(){        
-        var w = $(window).width() - 40
+        var w = $(window).width()
         var x = w - _ed.width()
         that.updateLayout(x)
         sys.renderer.redraw()
@@ -109,7 +119,7 @@
         _canvas.height = canvH
         sys.screenSize(canvW, canvH)
                 
-        _code.css({height:h-20,  width:edW-4, marginLeft:2})
+        _code.css({height:h-20,  width:edW-4, marginLeft:-1})
       },
       
       grabbed:function(e){
@@ -133,7 +143,7 @@
           return
         }
         
-        if (!_editing){
+        if (!_editing) {
           $.address.value("")
         }
         _editing = true

@@ -113,7 +113,7 @@
         that.redraw()
       },
 
-    	initMouseHandling:function(){
+      initMouseHandling:function(){
         // no-nonsense drag and drop (thanks springy.js)
       	selected = null;
       	nearest = null;
@@ -166,7 +166,7 @@
   }
   
   var Maps = function(elt){
-    var sys = arbor.ParticleSystem(4000, 500, 0.5, 55)
+    var sys = arbor.ParticleSystem({friction:.5, stiffness:600, repulsion:1000,precision:0.1,fps:55,dt:0.03})
     sys.renderer = Renderer("#viewport") // our newly created renderer will have its .init() method called shortly by sys...
     
     var dom = $(elt)    
@@ -189,7 +189,7 @@
     
     var that = {
       init:function(){
-        
+
         $.each(_maps, function(stub, map){
           _links.append("<li><a href='#/"+stub+"' class='"+stub+"'>"+map.title+"</a></li>")
         })

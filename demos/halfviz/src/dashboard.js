@@ -41,15 +41,19 @@
         dom.find('.frob').mousedown(that.beginFrobbing)
         dom.find('img').mousedown(function(){  return false })
         dom.find('.toggle').click(that.toggleGravity)
-
+        dom.find('.freeze').click(that.freeze)
         $('.help').click(that.showHelp)
-        dom.find('.about').click(that.showIntro)
-        $("#intro h1 a").click(that.hideIntro)
-        
+
         $(that.helpPanel).bind('closed', that.hideHelp)
         return that
       },
-      
+
+
+      freeze: function () {
+        sys.stop()
+
+      },
+
       update:function(){
         $.each(sys.parameters(), function(param, val){
           if (param=='gravity'){

@@ -4,24 +4,10 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>arbor.js » halfviz</title>
-	<meta name="generator" content="TextMate http://macromates.com/">
-	<meta name="author" content="Christian Swinehart">
-	<!-- Date: 2010-12-20 -->
+	<title>NETWORK EXPLORER</title>
 	<link rel="stylesheet" href="style/halfviz.css" type="text/css" charset="utf-8">
 </head>
 <body>
-
-  <div id="intro">
-    <h1>about <a href="#">&times;</a></h1>
-    <p>HalfViz is a graph visualization environment with a not-coincidental similarity to
-       AT&amp;T’s <em>Nevermind</em>-era, C-language classic <a target="_blank" href="http://graphviz.org">GraphViz</a>.</p>
-    <p>It takes one of the central good ideas of GraphViz – the <code><a target="_blank" href="http://graphviz.org/doc/info/lang.html">.dot</a></code> 
-       graph description language – and scales things back in the name of simplicity of implementation
-       and brevity of syntax. Remember, <a target="_blank" href="http://arborjs.org/docs/worse-is-better">worse is better</a> these days.</p>
-    <p>The result is the <a href="#" class="help">halftone</a> language; a <code>dot</code>-inspired, mostly-declarative 
-       format for describing graph relationships and styling the resulting nodes and edges.
-  </div>
 
   <div id="rtfm">
     <h1><span>the halftone language</span><a href="#">&times;</a></h1>
@@ -161,23 +147,27 @@
     <canvas id="viewport" width="800" height="600"></canvas>
     <div id="editor">
       <div class="io">
-        <div class="ctrl"><a href="#" class="new">clear</a><a class="examples" href="#">examples <span></span></a></div>
+        <div class="ctrl">
+          <a href="#" class="new">clear</a>
+          <a class="examples" href="#">examples <span></span></a>
+        </div>
         <ul class="dialog"></ul>
       </div>
-      <textarea id="code"></textarea>  
+      <textarea id="code"></textarea>
     </div>
     <div id="grabber"></div>
-  </div>  
+  </div>
 
   <div id="dashboard">
-    <a href="#" class="about active"><div class="popup"><img src="style/nub.png">About</div>about halfviz</a>
     <a href="#" class="help">syntax help</a>
     <ul class="controls">
       <li class="stiffness">spring tension <span class="frob">10,000</span></li>
       <li class="repulsion">node repulsion <span class="frob">10,000</span></li>
       <li class="friction">friction <span class="frob">20%</span></li>
       <li class="gravity">gravity <span class="toggle">.</span></li>
+      <li class="freeze-graph"><span class="freeze">freeze</span></li>
     </ul>
+
   </div>
 
 
@@ -185,6 +175,10 @@
   <script src="../_/jquery.address-1.4.min.js"></script>
   <script src="../../lib/arbor.js"></script>
   <script src="../_/graphics.js"></script>
+
+
+  <!--for debug use-->
+  <script src="src/debug.js"></script>
 
   <!-- the halfviz source, broken out one ‘class’ per file -->
   <script src="src/dashboard.js"></script>
